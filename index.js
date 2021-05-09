@@ -17,7 +17,7 @@ fastify.get("/rank_a", async (request, reply) => {
     let name; if (!rq.name) {name = "User";} else {name = rq.name;}
     let dis; if (!rq.dis) {dis = "1234";} else {dis = rq.dis;}
     let col; if (!rq.col) {col = "#FFFFFF";} else {col = "#" + rq.col;}
-    let bg, bgt; if(!rq.bg) {bgt = "COLOR"; bg = "#000000"} else {let url; bg = rq.bg; bgt = "IMAGE"; try {url = new URL(bg);} catch {bgt = "COLOR"; bg = "#" + rq.bg;}}
+    let bg, bgt; if(!rq.bg) {bgt = "COLOR"; bg = "#000000"} else {let bgstr = rq.bg; let imgbool = bgstr.includes("http"); if (!imgbool) {bgt = "COLOR"; bg = "#" + rq.bg;} else {bgt = "IMAGE"; bg = rq.bg;}}
     let level; if (!rq.level) {level = parseInt(1, 10);} else {level = rq.level;}
     let rank; if (!rq.rank) {rank = parseInt(0, 10);} else {rank = parseInt(rq.rank, 10);}
     const rankCard = new canvacord.Rank()
