@@ -5,9 +5,7 @@ const fastify = require("fastify")({
 
 const defAvatar = "https://cdn.discordapp.com/embed/avatars/4.png";
 
-fastify.get("/", async (request, reply) => {
-    return { hello: "world" }
-})
+fastify.get("/", async (request, reply) => {return { hello: "world" };});
 
 fastify.get("/rank_a", async (request, reply) => {
     const rq = request.query;
@@ -17,7 +15,7 @@ fastify.get("/rank_a", async (request, reply) => {
     let name; if (!rq.name) {name = "User";} else {name = rq.name;}
     let dis; if (!rq.dis) {dis = "1234";} else {dis = rq.dis;}
     let col; if (!rq.col) {col = "#FFFFFF";} else {col = "#" + rq.col;}
-    let bg, bgt; if(!rq.bg) {bgt = "COLOR"; bg = "#000000"} else {let bgstr = rq.bg; let imgbool = bgstr.includes("http"); if (!imgbool) {bgt = "COLOR"; bg = "#" + rq.bg;} else {bgt = "IMAGE"; bg = rq.bg;}}
+    let bg, bgt; if(!rq.bg) {bgt = "COLOR"; bg = "#000000";} else {let bgstr = rq.bg; let imgbool = bgstr.includes("http"); if (!imgbool) {bgt = "COLOR"; bg = "#" + rq.bg;} else {bgt = "IMAGE"; bg = rq.bg;}}
     let level; if (!rq.level) {level = parseInt(1, 10);} else {level = rq.level;}
     let rank; if (!rq.rank) {rank = parseInt(0, 10);} else {rank = parseInt(rq.rank, 10);}
     const rankCard = new canvacord.Rank()
@@ -32,20 +30,11 @@ fastify.get("/rank_a", async (request, reply) => {
         .setLevel(Number(level))
         .setRank(rank);
     rankCard.build()
-        .then(data => {
+        .then((data) => {
             reply.type("image/png");
             reply.send(data);
         });
 })
 
-
-const start = async () => {
-    try {
-        await fastify.listen(3000)
-    } catch (err) {
-        fastify.log.error(err)
-        process.exit(1)
-    }
-}
-
+const start = async () => {try {await fastify.listen(3000);} catch (err) {fastify.log.error(err); process.exit(1);}}
 start()
